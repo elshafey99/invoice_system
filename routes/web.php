@@ -1,7 +1,9 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\InvoicesController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SectionsController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,11 +21,23 @@ Route::get('/', function () {
     return view('auth.login');
 });
 
-Route::get('/{page}', [AdminController::class, 'index']);
 
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::get('/invoices', [InvoicesController::class, 'index']);
+
+Route::group(['prefix' => 'sections', 'as' => 'sections.'], function () {
+    Route::get('/', [SectionsController::class, 'index'])->name('index');
+    Route::post('/store', [SectionsController::class, 'store'])->name('store');
+    Route::put('/update', [SectionsController::class, 'update'])->name('update');
+    Route::delete('/destroy', [SectionsController::class, 'destroy'])->name('destroy');
+});
+
+
+
+Route::get('/{page}', [AdminController::class, 'index']);
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
