@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\InvoicesController;
+use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SectionsController;
 use Illuminate\Support\Facades\Route;
@@ -35,7 +36,12 @@ Route::group(['prefix' => 'sections', 'as' => 'sections.'], function () {
     Route::delete('/destroy', [SectionsController::class, 'destroy'])->name('destroy');
 });
 
-
+Route::group(['prefix' => 'products', 'as' => 'products.'], function () {
+    Route::get('/', [ProductsController::class, 'index'])->name('index');
+    Route::post('/store', [ProductsController::class, 'store'])->name('store');
+    Route::put('/update', [ProductsController::class, 'update'])->name('update');
+    Route::delete('/destroy', [ProductsController::class, 'destroy'])->name('destroy');
+});
 
 Route::get('/{page}', [AdminController::class, 'index']);
 
