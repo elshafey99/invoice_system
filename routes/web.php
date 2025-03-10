@@ -1,7 +1,9 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\InvoicesAttachmentController;
 use App\Http\Controllers\InvoicesController;
+use App\Http\Controllers\InvoicesDetailsController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SectionsController;
@@ -27,7 +29,25 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::get('/invoices', [InvoicesController::class, 'index']);
+
+Route::group(['prefix' => 'invoices', 'as' => 'invoices.'], function () {
+    Route::get('/', [InvoicesController::class, 'index'])->name('index');
+    Route::get('/create', [InvoicesController::class, 'create'])->name('create');
+    Route::post('/store', [InvoicesController::class, 'store'])->name('store');
+    Route::get('/status-show/{id}', [InvoicesController::class, 'show'])->name('status-show');
+    Route::get('/edit/{id}', [InvoicesController::class, 'edit'])->name('edit');
+    Route::put('/update/{id}', [InvoicesController::class, 'update'])->name('update');
+    Route::post('/status-update/{id}', [InvoicesController::class, 'statusUpdate'])->name('status-update');
+    Route::delete('/destroy/{id}', [InvoicesController::class, 'destroy'])->name('destroy');
+});
+
+Route::get('/sections/{id}', [InvoicesController::class, 'getProducts'])->name('getproducts');
+
+Route::get('/invoice-details/{id}', [InvoicesDetailsController::class, 'edit'])->name('invoice-details');
+Route::get('/view-file/{invoice_number}/{file_name}', [InvoicesDetailsController::class, 'openFile'])->name('view-file');
+Route::get('/download/{invoice_number}/{file_name}', [InvoicesDetailsController::class, 'getFile'])->name('download');
+Route::post('/delete-file', [InvoicesDetailsController::class, 'destroy'])->name('delete-file');
+Route::post('/invoice-attachment', [InvoicesAttachmentController::class, 'store'])->name('invoice-attachment');
 
 Route::group(['prefix' => 'sections', 'as' => 'sections.'], function () {
     Route::get('/', [SectionsController::class, 'index'])->name('index');
