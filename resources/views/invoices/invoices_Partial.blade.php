@@ -1,5 +1,5 @@
 @extends('layouts.master')
-@section('title', 'Invoice Bills')
+@section('title', 'Partially Paid Invoices')
 @section('css')
     <!-- Internal Data table css -->
     <link href="{{ URL::asset('assets/plugins/datatable/css/dataTables.bootstrap4.min.css') }}" rel="stylesheet" />
@@ -16,14 +16,14 @@
     <div class="breadcrumb-header justify-content-between">
         <div class="my-auto">
             <div class="d-flex">
-                <h4 class="content-title mb-0 my-auto">Invoices</h4>
-                <span class="text-muted mt-1 tx-13 mr-2 mb-0">/ Invoice Bills</span>
+                <h4 class="content-title mb-0 my-auto">Invoices</h4><span class="text-muted mt-1 tx-13 mr-2 mb-0">/
+                    Partially Paid Invoices
+                </span>
             </div>
         </div>
     </div>
     <!-- breadcrumb -->
 @endsection
-
 @section('content')
     @if (session()->has('delete_invoice'))
         <script>
@@ -35,7 +35,6 @@
             }
         </script>
     @endif
-
     @if (session()->has('Status_Update'))
         <script>
             window.onload = function () {
@@ -44,32 +43,22 @@
                     type: "success"
                 })
             }
-
         </script>
     @endif
-
-    @if (session()->has('restore_invoice'))
-        <script>
-            window.onload = function () {
-                notif({
-                    msg: "The invoice has been successfully retrieved",
-                    type: "success"
-                })
-            }
-        </script>
-    @endif
-
     <!-- row -->
     <div class="row">
+        <!--div-->
         <div class="col-xl-12">
             <div class="card mg-b-20">
                 <div class="card-header pb-0">
-                    <a href="invoices/create" class="modal-effect btn btn-sm btn-primary" style="color:white">
-                        <i class="fas fa-plus"></i>&nbsp; Add Invoice</a>
+                    {{-- <div class="d-flex justify-content-between">
+                        <a href="invoices/create" class="modal-effect btn btn-sm btn-primary" style="color:white"><i
+                                class="fas fa-plus"></i>&nbsp; اضافة فاتورة</a>
+                    </div> --}}
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table id="example1" class="table key-buttons text-md-nowrap">
+                        <table id="example1" class="table key-buttons text-md-nowrap" data-page-length='50'>
                             <thead>
                                 <tr>
                                     <th class="border-bottom-0">#</th>
@@ -120,43 +109,27 @@
                                                     class="btn ripple btn-primary btn-sm" data-toggle="dropdown"
                                                     type="button">Action<i class="fas fa-caret-down ml-1"></i></button>
                                                 <div class="dropdown-menu tx-13">
-                                                    {{-- @can('تعديل الفاتورة') --}}
                                                     <a class="dropdown-item"
                                                         href=" {{ url('invoices/edit') }}/{{ $invoice->id }}">Edit invoice</a>
-                                                    {{-- @endcan --}}
 
-                                                    {{-- @can('حذف الفاتورة') --}}
                                                     <a class="dropdown-item"
                                                         href=" {{ url('invoices/destroy') }}/{{ $invoice->id }}"
                                                         data-invoice_id="{{ $invoice->id }}" data-toggle="modal"
                                                         data-target="#delete_invoice">
                                                         <i class="text-danger fas fa-trash-alt">
                                                         </i>&nbsp;&nbsp;Delete invoice</a>
-                                                    {{-- @endcan --}}
 
-                                                    {{--@can('تغير حالة الدفع') --}}
                                                     <a class="dropdown-item"
                                                         href="{{ URL::route('invoices.status-show', [$invoice->id]) }}">
                                                         <i class=" text-success fas fa-money-bill"></i>&nbsp;&nbsp;Change
                                                         payment status</a>
-                                                    {{-- @endcan --}}
 
-                                                    {{--@can('ارشفة الفاتورة')--}}
                                                     <a class="dropdown-item" href="#" data-invoice_id="{{ $invoice->id }}"
                                                         data-toggle="modal" data-target="#Transfer_invoice"><i
-                                                            class="text-warning fas fa-exchange-alt"></i>&nbsp;&nbsp;Moved to
-                                                        archive</a>
-                                                    {{-- @endcan --}}
-
-                                                    {{--@can('طباعةالفاتورة')--}}
-                                                    <a class="dropdown-item" href="invoices/invoice-print/{{ $invoice->id }}">
-                                                        <i class="text-success fas fa-print">
-                                                        </i>&nbsp;&nbsp; Print invoice
-                                                    </a>
-                                                    {{--@endcan --}}
+                                                            class="text-warning fas fa-exchange-alt"></i>&nbsp;&nbsp;نقل الي
+                                                        الارشيف</a>
                                                 </div>
                                             </div>
-
                                         </td>
                                     </tr>
                                 @endforeach
@@ -166,63 +139,64 @@
                 </div>
             </div>
         </div>
-
-        <!-- delete invoice -->
-        <div class="modal fade" id="delete_invoice" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-            aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Delete invoice</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                        <form action="{{ route('invoices.destroy', 'test') }}" method="post">
-                            {{ method_field('delete') }}
-                            {{ csrf_field() }}
-                    </div>
-                    <div class="modal-body">
-                        Are you sure about the deletion process?
-                        <input type="hidden" name="invoice_id" id="invoice_id" value="">
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">cancel</button>
-                        <button type="submit" class="btn btn-danger">delete</button>
-                    </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-        <!-- ارشيف الفاتورة -->
-        <div class="modal fade" id="Transfer_invoice" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-            aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Archive Invoice</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                        <form action="{{ route('invoices.destroy', 'test') }}" method="post">
-                            {{ method_field('delete') }}
-                            {{ csrf_field() }}
-                    </div>
-                    <div class="modal-body">
-                        Are you sure about the archiving process?
-                        <input type="hidden" name="invoice_id" id="invoice_id" value="">
-                        <input type="hidden" name="id_page" id="id_page" value="2">
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">cancel</button>
-                        <button type="submit" class="btn btn-success">Archive</button>
-                    </div>
-                    </form>
-                </div>
-            </div>
-        </div>
         <!--/div-->
-        <!-- row closed -->
     </div>
+    <!-- delete invoice -->
+    <div class="modal fade" id="delete_invoice" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Delete invoice</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <form action="{{ route('invoices.destroy', 'test') }}" method="post">
+                        {{ method_field('delete') }}
+                        {{ csrf_field() }}
+                </div>
+                <div class="modal-body">
+                    Are you sure about the deletion process?
+                    <input type="hidden" name="invoice_id" id="invoice_id" value="">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">cancel</button>
+                    <button type="submit" class="btn btn-danger">delete</button>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- ارشيف الفاتورة -->
+    <div class="modal fade" id="Transfer_invoice" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">ارشفة الفاتورة</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <form action="{{ route('invoices.destroy', 'test') }}" method="post">
+                        {{ method_field('delete') }}
+                        {{ csrf_field() }}
+                </div>
+                <div class="modal-body">
+                    هل انت متاكد من عملية الارشفة ؟
+                    <input type="hidden" name="invoice_id" id="invoice_id" value="">
+                    <input type="hidden" name="id_page" id="id_page" value="2">
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">الغاء</button>
+                    <button type="submit" class="btn btn-success">تاكيد</button>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    </div>
+    <!-- row closed -->
     <!-- Container closed -->
     </div>
     <!-- main-content closed -->
@@ -250,6 +224,7 @@
     <!--Internal  Notify js -->
     <script src="{{ URL::asset('assets/plugins/notify/js/notifIt.js') }}"></script>
     <script src="{{ URL::asset('assets/plugins/notify/js/notifit-custom.js') }}"></script>
+
     <script>
         $('#delete_invoice').on('show.bs.modal', function (event) {
             var button = $(event.relatedTarget)

@@ -1,5 +1,5 @@
 @extends('layouts.master')
-@section('title', 'Invoice Bills')
+@section('title', 'Archived Invoices')
 @section('css')
     <!-- Internal Data table css -->
     <link href="{{ URL::asset('assets/plugins/datatable/css/dataTables.bootstrap4.min.css') }}" rel="stylesheet" />
@@ -16,43 +16,31 @@
     <div class="breadcrumb-header justify-content-between">
         <div class="my-auto">
             <div class="d-flex">
-                <h4 class="content-title mb-0 my-auto">Invoices</h4>
-                <span class="text-muted mt-1 tx-13 mr-2 mb-0">/ Invoice Bills</span>
+                <h4 class="content-title mb-0 my-auto">Invoices</h4><span class="text-muted mt-1 tx-13 mr-2 mb-0">/ Archived
+                    invoices</span>
             </div>
         </div>
     </div>
     <!-- breadcrumb -->
 @endsection
-
 @section('content')
+
+    @if (session()->has('archive_invoice'))
+        <script>
+            window.onload = function () {
+                notif({
+                    msg: "The invoice has been archived successfully.",
+                    type: "success"
+                })
+            }
+        </script>
+    @endif
+
     @if (session()->has('delete_invoice'))
         <script>
             window.onload = function () {
                 notif({
-                    msg: "The invoice has been successfully deleted.",
-                    type: "success"
-                })
-            }
-        </script>
-    @endif
-
-    @if (session()->has('Status_Update'))
-        <script>
-            window.onload = function () {
-                notif({
-                    msg: "Payment status updated successfully",
-                    type: "success"
-                })
-            }
-
-        </script>
-    @endif
-
-    @if (session()->has('restore_invoice'))
-        <script>
-            window.onload = function () {
-                notif({
-                    msg: "The invoice has been successfully retrieved",
+                    msg: "The invoice has been deleted successfully.",
                     type: "success"
                 })
             }
@@ -61,15 +49,14 @@
 
     <!-- row -->
     <div class="row">
+        <!--div-->
         <div class="col-xl-12">
             <div class="card mg-b-20">
                 <div class="card-header pb-0">
-                    <a href="invoices/create" class="modal-effect btn btn-sm btn-primary" style="color:white">
-                        <i class="fas fa-plus"></i>&nbsp; Add Invoice</a>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table id="example1" class="table key-buttons text-md-nowrap">
+                        <table id="example1" class="table key-buttons text-md-nowrap" data-page-length='50'>
                             <thead>
                                 <tr>
                                     <th class="border-bottom-0">#</th>
@@ -97,8 +84,8 @@
                                         <td>{{ $invoice->invoice_Date }}</td>
                                         <td>{{ $invoice->due_date }}</td>
                                         <td>{{ $invoice->product }}</td>
-                                        <td><a
-                                                href="{{ url('invoice-details') }}/{{ $invoice->id }}">{{ $invoice->section->section_name }}</a>
+                                        <td><a href="{{ url('invoice-details') }}/{{ $invoice->id }}">
+                                                {{ $invoice->section->section_name }}</a>
                                         </td>
                                         <td>{{ $invoice->discount }}</td>
                                         <td>{{ $invoice->rate_vat }}</td>
@@ -113,50 +100,26 @@
                                                 <span class="text-warning">{{ $invoice->status }}</span>
                                             @endif
                                         </td>
+
                                         <td>{{ $invoice->note }}</td>
                                         <td>
                                             <div class="dropdown">
                                                 <button aria-expanded="false" aria-haspopup="true"
                                                     class="btn ripple btn-primary btn-sm" data-toggle="dropdown"
                                                     type="button">Action<i class="fas fa-caret-down ml-1"></i></button>
+
                                                 <div class="dropdown-menu tx-13">
-                                                    {{-- @can('تعديل الفاتورة') --}}
-                                                    <a class="dropdown-item"
-                                                        href=" {{ url('invoices/edit') }}/{{ $invoice->id }}">Edit invoice</a>
-                                                    {{-- @endcan --}}
-
-                                                    {{-- @can('حذف الفاتورة') --}}
-                                                    <a class="dropdown-item"
-                                                        href=" {{ url('invoices/destroy') }}/{{ $invoice->id }}"
-                                                        data-invoice_id="{{ $invoice->id }}" data-toggle="modal"
-                                                        data-target="#delete_invoice">
-                                                        <i class="text-danger fas fa-trash-alt">
-                                                        </i>&nbsp;&nbsp;Delete invoice</a>
-                                                    {{-- @endcan --}}
-
-                                                    {{--@can('تغير حالة الدفع') --}}
-                                                    <a class="dropdown-item"
-                                                        href="{{ URL::route('invoices.status-show', [$invoice->id]) }}">
-                                                        <i class=" text-success fas fa-money-bill"></i>&nbsp;&nbsp;Change
-                                                        payment status</a>
-                                                    {{-- @endcan --}}
-
-                                                    {{--@can('ارشفة الفاتورة')--}}
                                                     <a class="dropdown-item" href="#" data-invoice_id="{{ $invoice->id }}"
                                                         data-toggle="modal" data-target="#Transfer_invoice"><i
-                                                            class="text-warning fas fa-exchange-alt"></i>&nbsp;&nbsp;Moved to
-                                                        archive</a>
-                                                    {{-- @endcan --}}
+                                                            class="text-warning fas fa-exchange-alt">
+                                                        </i>&nbsp;&nbsp;Transfer to invoices</a>
 
-                                                    {{--@can('طباعةالفاتورة')--}}
-                                                    <a class="dropdown-item" href="invoices/invoice-print/{{ $invoice->id }}">
-                                                        <i class="text-success fas fa-print">
-                                                        </i>&nbsp;&nbsp; Print invoice
-                                                    </a>
-                                                    {{--@endcan --}}
+                                                    <a class="dropdown-item" href="#" data-invoice_id="{{ $invoice->id }}"
+                                                        data-toggle="modal" data-target="#delete_invoice"><i
+                                                            class="text-danger fas fa-trash-alt">
+                                                        </i>&nbsp;&nbsp; Delete invoice</a>
                                                 </div>
                                             </div>
-
                                         </td>
                                     </tr>
                                 @endforeach
@@ -166,62 +129,67 @@
                 </div>
             </div>
         </div>
-
-        <!-- delete invoice -->
-        <div class="modal fade" id="delete_invoice" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-            aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Delete invoice</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                        <form action="{{ route('invoices.destroy', 'test') }}" method="post">
-                            {{ method_field('delete') }}
-                            {{ csrf_field() }}
-                    </div>
-                    <div class="modal-body">
-                        Are you sure about the deletion process?
-                        <input type="hidden" name="invoice_id" id="invoice_id" value="">
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">cancel</button>
-                        <button type="submit" class="btn btn-danger">delete</button>
-                    </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-        <!-- ارشيف الفاتورة -->
-        <div class="modal fade" id="Transfer_invoice" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-            aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Archive Invoice</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                        <form action="{{ route('invoices.destroy', 'test') }}" method="post">
-                            {{ method_field('delete') }}
-                            {{ csrf_field() }}
-                    </div>
-                    <div class="modal-body">
-                        Are you sure about the archiving process?
-                        <input type="hidden" name="invoice_id" id="invoice_id" value="">
-                        <input type="hidden" name="id_page" id="id_page" value="2">
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">cancel</button>
-                        <button type="submit" class="btn btn-success">Archive</button>
-                    </div>
-                    </form>
-                </div>
-            </div>
-        </div>
         <!--/div-->
-        <!-- row closed -->
+    </div>
+
+    <!-- حذف الفاتورة -->
+    <div class="modal fade" id="delete_invoice" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Delete Invoice</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <form action="{{ route('invoices.delete-archive', 'test') }}" method="post">
+                        {{ method_field('delete') }}
+                        {{ csrf_field() }}
+                </div>
+                <div class="modal-body">
+                    Are you sure about the deletion process?
+                    <input type="hidden" name="invoice_id" id="invoice_id" value="">
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">cancel</button>
+                    <button type="submit" class="btn btn-danger">delete</button>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!--الغاء الارشفة-->
+    <div class="modal fade" id="Transfer_invoice" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Cancel invoice archiving</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <form action="{{ route('invoices.update-archive', 'test') }}" method="post">
+                        {{ method_field('patch') }}
+                        {{ csrf_field() }}
+                </div>
+                <div class="modal-body">
+                    Are you sure about the unarchiving process?
+                    <input type="hidden" name="invoice_id" id="invoice_id" value="">
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">cancel</button>
+                    <button type="submit" class="btn btn-success">submit</button>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    </div>
+    <!-- row closed -->
     </div>
     <!-- Container closed -->
     </div>

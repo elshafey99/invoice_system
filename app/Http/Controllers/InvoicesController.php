@@ -138,20 +138,21 @@ class InvoicesController extends Controller
         $id = $request->invoice_id;
         $invoices = invoices::where('id', $id)->first();
         $Details = invoicesAttachment::where('invoice_id', $id)->first();
-        // $id_page = $request->id_page;
-        // if (!$id_page == 2) {
-        if (!empty($Details->invoice_number)) {
-            Storage::disk('public_uploads')->deleteDirectory($Details->invoice_number);
+        $id_page = $request->id_page;
+
+        if (!$id_page == 2) {
+
+            if (!empty($Details->invoice_number)) {
+                Storage::disk('public_uploads')->deleteDirectory($Details->invoice_number);
+            }
+            $invoices->forceDelete();
+            session()->flash('delete_invoice');
+            return redirect('/invoices');
+        } else {
+            $invoices->delete();
+            session()->flash('archive_invoice');
+            return redirect('invoices/view-archive');
         }
-        $invoices->forceDelete();
-        session()->flash('delete_invoice');
-        return redirect('/invoices');
-        //} 
-        // else {
-        //     $invoices->delete();
-        //     session()->flash('archive_invoice');
-        //     return redirect('/Archive');
-        // }
     }
 
     public function getProducts($id)
@@ -165,7 +166,6 @@ class InvoicesController extends Controller
         $invoices = invoices::findOrFail($id);
 
         if ($request->Status === 'paid') {
-
             $invoices->update([
                 'value_status' => 1,
                 'Status' => $request->Status,
@@ -186,7 +186,7 @@ class InvoicesController extends Controller
         } else {
             $invoices->update([
                 'value_status' => 3,
-                'status' => $request->Status,
+                'Status' => $request->Status,
                 'payment_date' => $request->payment_date,
             ]);
             invoicesDetails::create([
@@ -205,21 +205,26 @@ class InvoicesController extends Controller
         return redirect('/invoices');
     }
 
-    public function Invoice_Paid()
+    public function invoicePaid()
     {
-        $invoices = Invoices::where('Value_Status', 1)->get();
+        $invoices = Invoices::where('value_status', 1)->get();
         return view('invoices.invoices_paid', compact('invoices'));
     }
 
-    public function Invoice_unPaid()
+    public function invoiceUnPaid()
     {
-        $invoices = Invoices::where('Value_Status', 2)->get();
+        $invoices = Invoices::where('value_status', 2)->get();
         return view('invoices.invoices_unpaid', compact('invoices'));
     }
 
-    public function Invoice_Partial()
+    public function invoicePartial()
     {
-        $invoices = Invoices::where('Value_Status', 3)->get();
+        $invoices = Invoices::where('value_status', 3)->get();
         return view('invoices.invoices_Partial', compact('invoices'));
+    }
+    public function invoicePrint($id)
+    {
+        $invoices = invoices::where('id', $id)->first();
+        return view('invoices.Print_invoice', compact('invoices'));
     }
 }

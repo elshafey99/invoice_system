@@ -1,13 +1,14 @@
 <?php
 
-use App\Http\Controllers\AdminController;
-use App\Http\Controllers\InvoicesAttachmentController;
-use App\Http\Controllers\InvoicesController;
-use App\Http\Controllers\InvoicesDetailsController;
-use App\Http\Controllers\ProductsController;
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\SectionsController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\InvoicesController;
+use App\Http\Controllers\ProductsController;
+use App\Http\Controllers\SectionsController;
+use App\Http\Controllers\InvoicesArchivController;
+use App\Http\Controllers\InvoicesDetailsController;
+use App\Http\Controllers\InvoicesAttachmentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,6 +40,14 @@ Route::group(['prefix' => 'invoices', 'as' => 'invoices.'], function () {
     Route::put('/update/{id}', [InvoicesController::class, 'update'])->name('update');
     Route::post('/status-update/{id}', [InvoicesController::class, 'statusUpdate'])->name('status-update');
     Route::delete('/destroy/{id}', [InvoicesController::class, 'destroy'])->name('destroy');
+    Route::get('invoice-paid', [InvoicesController::class, 'invoicePaid'])->name('invoice-paid');
+    Route::get('invoice-unpaid', [InvoicesController::class, 'invoiceUnPaid'])->name('invoice-unpaid');
+    Route::get('invoice-partial', [InvoicesController::class, 'invoicePartial'])->name('invoice-partial');
+    Route::get('invoice-print/{id}', [InvoicesController::class, 'invoicePrint'])->name('invoice-print');
+
+    Route::get('view-archive', [InvoicesArchivController::class, 'index'])->name('view-archive');
+    Route::delete('delete-archive', [InvoicesArchivController::class, 'destroy'])->name('delete-archive');
+    Route::patch('update-archive', [InvoicesArchivController::class, 'update'])->name('update-archive');
 });
 
 Route::get('/sections/{id}', [InvoicesController::class, 'getProducts'])->name('getproducts');
