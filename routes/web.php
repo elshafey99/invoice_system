@@ -72,6 +72,8 @@ Route::group(['prefix' => 'products', 'as' => 'products.'], function () {
     Route::delete('/destroy', [ProductsController::class, 'destroy'])->name('destroy');
 });
 
+Route::get('export-invoices', [InvoicesController::class, 'export']);
+
 Route::get('/{page}', [AdminController::class, 'index']);
 
 Route::middleware('auth')->group(function () {

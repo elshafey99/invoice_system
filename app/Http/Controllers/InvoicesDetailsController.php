@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\invoices;
-use App\Models\invoicesAttachment;
-use App\Models\invoicesDetails;
 use Illuminate\Http\Request;
+use App\Models\invoicesDetails;
+use App\Models\invoicesAttachment;
+use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Storage;
 
 class InvoicesDetailsController extends Controller
@@ -69,7 +70,7 @@ class InvoicesDetailsController extends Controller
         $invoices = invoicesAttachment::findOrFail($request->id_file);
         $invoices->delete();
         Storage::disk('public_uploads')->delete($request->invoice_number . '/' . $request->file_name);
-        session()->flash('delete', 'تم حذف المرفق بنجاح');
+        session()->flash('delete', 'The attachment has been successfully deleted.');
         return back();
     }
 
