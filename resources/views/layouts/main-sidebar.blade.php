@@ -84,10 +84,11 @@
                         </svg><span class="side-menu__label">Reports</span><i class="angle fe fe-chevron-down"></i></a>
                     <ul class="slide-menu">
                         @can('Invoice Report')
-                            <li><a class="slide-item" href="{{ url('/' . ($page = 'cards')) }}">Invoicing Reports</a></li>
+                            <li><a class="slide-item" href="{{ url('/' . ($page = 'invoices_report')) }}">Invoicing
+                                    Reports</a></li>
                         @endcan
                         @can('Customer Report')
-                            <li><a class="slide-item" href="{{ url('/' . ($page = 'darggablecards')) }}">Customer Reports</a>
+                            <li><a class="slide-item" href="{{ url('/' . ($page = 'customers_report')) }}">Customer Reports</a>
                             </li>
                         @endcan
                     </ul>

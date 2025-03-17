@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CustomersReportController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
@@ -11,6 +12,7 @@ use App\Http\Controllers\SectionsController;
 use App\Http\Controllers\InvoicesArchivController;
 use App\Http\Controllers\InvoicesDetailsController;
 use App\Http\Controllers\InvoicesAttachmentController;
+use App\Http\Controllers\InvoicesReportController;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,7 +34,7 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-
+// invoices route
 Route::group(['prefix' => 'invoices', 'as' => 'invoices.'], function () {
     Route::get('/', [InvoicesController::class, 'index'])->name('index');
     Route::get('/create', [InvoicesController::class, 'create'])->name('create');
@@ -76,16 +78,20 @@ Route::group(['prefix' => 'products', 'as' => 'products.'], function () {
 
 Route::get('export-invoices', [InvoicesController::class, 'export']);
 
+
+
+Route::get('/invoices_report', [InvoicesReportController::class, 'index'])->name('invoices_report');
+Route::post('/Search_invoices', [InvoicesReportController::class, 'search_invoices'])->name('Search_invoices');
+
+Route::get('/customers_report', [CustomersReportController::class, 'index'])->name('invoices_report');
+Route::post('/Search_customers', [CustomersReportController::class, 'search_invoices'])->name('Search_invoices');
+
 Route::get('/{page}', [AdminController::class, 'index']);
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-
-    //Route::resource('roles', RoleController::class);
-    // Route::resource('users', UserController::class);
-
 
 
     Route::middleware('auth')->group(function () {
