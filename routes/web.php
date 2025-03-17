@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\RoleController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\InvoicesController;
@@ -80,6 +82,30 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    //Route::resource('roles', RoleController::class);
+    // Route::resource('users', UserController::class);
+
+
+
+    Route::middleware('auth')->group(function () {
+        Route::get('roles/view', [RoleController::class, 'index'])->name('roles.view');
+        Route::get('roles/create', [RoleController::class, 'create'])->name('roles.create');
+        Route::get('roles/edit/{id}', [RoleController::class, 'edit'])->name('roles.edit');
+        Route::get('roles/show/{id}', [RoleController::class, 'show'])->name('roles.show');
+        Route::delete('roles/delete/{id}', [RoleController::class, 'destroy'])->name('roles.delete');
+        Route::post('roles/store', [RoleController::class, 'store'])->name('roles.store');
+        Route::patch('roles/update/{id}', [RoleController::class, 'update'])->name('roles.update');
+    });
+
+    Route::middleware('auth')->group(function () {
+        Route::get('users/view', [UserController::class, 'index'])->name('users.view');
+        Route::get('users/create', [UserController::class, 'create'])->name('users.create');
+        Route::get('users/edit/{id}', [UserController::class, 'edit'])->name('users.edit');
+        Route::delete('users/delete/{id}', [UserController::class, 'destroy'])->name('users.delete');
+        Route::post('users/store', [UserController::class, 'store'])->name('users.store');
+        Route::patch('users/update/{id}', [UserController::class, 'update'])->name('users.update');
+    });
 });
 
 require __DIR__ . '/auth.php';

@@ -52,8 +52,6 @@
         <!--div-->
         <div class="col-xl-12">
             <div class="card mg-b-20">
-                <div class="card-header pb-0">
-                </div>
                 <div class="card-body">
                     <div class="table-responsive">
                         <table id="example1" class="table key-buttons text-md-nowrap" data-page-length='50'>
@@ -93,11 +91,11 @@
                                         <td>{{ $invoice->total }}</td>
                                         <td>
                                             @if ($invoice->value_status == 1)
-                                                <span class="text-success">{{ $invoice->status }}</span>
+                                                <span class="text-success">{{ $invoice->Status }}</span>
                                             @elseif($invoice->value_status == 2)
-                                                <span class="text-danger">{{ $invoice->status }}</span>
+                                                <span class="text-danger">{{ $invoice->Status }}</span>
                                             @else
-                                                <span class="text-warning">{{ $invoice->status }}</span>
+                                                <span class="text-warning">{{ $invoice->Status }}</span>
                                             @endif
                                         </td>
 
@@ -132,7 +130,7 @@
         <!--/div-->
     </div>
 
-    <!-- حذف الفاتورة -->
+    <!-- delete -->
     <div class="modal fade" id="delete_invoice" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -187,13 +185,7 @@
             </div>
         </div>
     </div>
-
-    </div>
     <!-- row closed -->
-    </div>
-    <!-- Container closed -->
-    </div>
-    <!-- main-content closed -->
 @endsection
 @section('js')
     <!-- Internal Data tables -->

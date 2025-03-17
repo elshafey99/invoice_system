@@ -108,11 +108,11 @@
                                         <td>{{ $invoice->total }}</td>
                                         <td>
                                             @if ($invoice->value_status == 1)
-                                                <span class="text-success">{{ $invoice->status }}</span>
+                                                <span class="text-success">{{ $invoice->Status }}</span>
                                             @elseif($invoice->value_status == 2)
-                                                <span class="text-danger">{{ $invoice->status }}</span>
+                                                <span class="text-danger">{{ $invoice->Status }}</span>
                                             @else
-                                                <span class="text-warning">{{ $invoice->status }}</span>
+                                                <span class="text-warning">{{ $invoice->Status }}</span>
                                             @endif
                                         </td>
                                         <td>{{ $invoice->note }}</td>
@@ -122,43 +122,42 @@
                                                     class="btn ripple btn-primary btn-sm" data-toggle="dropdown"
                                                     type="button">Action<i class="fas fa-caret-down ml-1"></i></button>
                                                 <div class="dropdown-menu tx-13">
-                                                    {{-- @can('تعديل الفاتورة') --}}
-                                                    <a class="dropdown-item"
-                                                        href=" {{ url('invoices/edit') }}/{{ $invoice->id }}">Edit invoice</a>
-                                                    {{-- @endcan --}}
+                                                    @can('Edit Invoice')
+                                                        <a class="dropdown-item"
+                                                            href=" {{ url('invoices/edit') }}/{{ $invoice->id }}">Edit invoice</a>
+                                                    @endcan
 
-                                                    {{-- @can('حذف الفاتورة') --}}
-                                                    <a class="dropdown-item"
-                                                        href=" {{ url('invoices/destroy') }}/{{ $invoice->id }}"
-                                                        data-invoice_id="{{ $invoice->id }}" data-toggle="modal"
-                                                        data-target="#delete_invoice">
-                                                        <i class="text-danger fas fa-trash-alt">
-                                                        </i>&nbsp;&nbsp;Delete invoice</a>
-                                                    {{-- @endcan --}}
+                                                    @can('Delete Invoice')
+                                                        <a class="dropdown-item"
+                                                            href=" {{ url('invoices/destroy') }}/{{ $invoice->id }}"
+                                                            data-invoice_id="{{ $invoice->id }}" data-toggle="modal"
+                                                            data-target="#delete_invoice">
+                                                            <i class="text-danger fas fa-trash-alt">
+                                                            </i>&nbsp;&nbsp;Delete invoice</a>
+                                                    @endcan
 
-                                                    {{--@can('تغير حالة الدفع') --}}
-                                                    <a class="dropdown-item"
-                                                        href="{{ URL::route('invoices.status-show', [$invoice->id]) }}">
-                                                        <i class=" text-success fas fa-money-bill"></i>&nbsp;&nbsp;Change
-                                                        payment status</a>
-                                                    {{-- @endcan --}}
+                                                    @can('Change Payment Status')
+                                                        <a class="dropdown-item"
+                                                            href="{{ URL::route('invoices.status-show', [$invoice->id]) }}">
+                                                            <i class=" text-success fas fa-money-bill"></i>&nbsp;&nbsp;Change
+                                                            payment status</a>
+                                                    @endcan
 
-                                                    {{--@can('ارشفة الفاتورة')--}}
-                                                    <a class="dropdown-item" href="#" data-invoice_id="{{ $invoice->id }}"
-                                                        data-toggle="modal" data-target="#Transfer_invoice"><i
-                                                            class="text-warning fas fa-exchange-alt"></i>&nbsp;&nbsp;Moved to
-                                                        archive</a>
-                                                    {{-- @endcan --}}
+                                                    @can('Archive Invoice')
+                                                        <a class="dropdown-item" href="#" data-invoice_id="{{ $invoice->id }}"
+                                                            data-toggle="modal" data-target="#Transfer_invoice"><i
+                                                                class="text-warning fas fa-exchange-alt"></i>&nbsp;&nbsp;Moved to
+                                                            archive</a>
+                                                    @endcan
 
-                                                    {{--@can('طباعةالفاتورة')--}}
-                                                    <a class="dropdown-item" href="invoices/invoice-print/{{ $invoice->id }}">
-                                                        <i class="text-success fas fa-print">
-                                                        </i>&nbsp;&nbsp; Print invoice
-                                                    </a>
-                                                    {{--@endcan --}}
+                                                    @can('Print Invoice')
+                                                        <a class="dropdown-item" href="invoices/invoice-print/{{ $invoice->id }}">
+                                                            <i class="text-success fas fa-print">
+                                                            </i>&nbsp;&nbsp; Print invoice
+                                                        </a>
+                                                    @endcan
                                                 </div>
                                             </div>
-
                                         </td>
                                     </tr>
                                 @endforeach
@@ -222,12 +221,8 @@
                 </div>
             </div>
         </div>
-        <!--/div-->
         <!-- row closed -->
     </div>
-    <!-- Container closed -->
-    </div>
-    <!-- main-content closed -->
 @endsection
 @section('js')
     <!-- Internal Data tables -->

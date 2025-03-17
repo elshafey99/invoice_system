@@ -75,8 +75,10 @@
 				<div class="card-header pb-0">
 					<div class="d-flex justify-content-between">
 						<div class="col-sm-6 col-md-4 col-xl-3">
-							<a class="modal-effect btn btn-outline-primary btn-block" data-effect="effect-scale"
-								data-toggle="modal" href="#modaldemo8">Add Products</a>
+							@can('Add Product')
+								<a class="modal-effect btn btn-outline-primary btn-block" data-effect="effect-scale"
+									data-toggle="modal" href="#modaldemo8">Add Products</a>
+							@endcan
 						</div>
 
 					</div>
@@ -103,15 +105,18 @@
 										<td>{{$product->section->section_name}}</td>
 										<td>{{$product->description}}</td>
 										<td>
-											<button class="btn btn-outline-success btn-sm" data-id="{{ $product->id }}"
-												data-product_name="{{ $product->product_name }}"
-												data-section_name="{{ $product->section->section_name }}"
-												data-description="{{ $product->description }}" data-toggle="modal"
-												data-target="#edit_Product">Edit</button>
-
-											<button class="btn btn-outline-danger btn-sm " data-id="{{ $product->id }}"
-												data-product_name="{{ $product->product_name }}" data-toggle="modal"
-												data-target="#modaldemo9">Delete</button>
+											@can('Edit Product')
+												<button class="btn btn-outline-success btn-sm" data-id="{{ $product->id }}"
+													data-product_name="{{ $product->product_name }}"
+													data-section_name="{{ $product->section->section_name }}"
+													data-description="{{ $product->description }}" data-toggle="modal"
+													data-target="#edit_Product">Edit</button>
+											@endcan
+											@can('Delete Product')
+												<button class="btn btn-outline-danger btn-sm " data-id="{{ $product->id }}"
+													data-product_name="{{ $product->product_name }}" data-toggle="modal"
+													data-target="#modaldemo9">Delete</button>
+											@endcan
 										</td>
 									</tr>
 								@endforeach
@@ -227,10 +232,6 @@
 		</div>
 	</div>
 	<!-- row closed -->
-	</div>
-	<!-- Container closed -->
-	</div>
-	<!-- main-content closed -->
 @endsection
 @section('js')
 	<!-- Internal Data tables -->

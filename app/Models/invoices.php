@@ -23,7 +23,7 @@ class invoices extends Model
         'value_vat',
         'rate_vat',
         'total',
-        'status',
+        'Status',
         'value_status',
         'note',
         'Payment_date',

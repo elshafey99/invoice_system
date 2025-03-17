@@ -50,7 +50,7 @@ class InvoicesController extends Controller
             'value_vat' => $request->value_vat,
             'rate_vat' => $request->rate_vat,
             'total' => $request->total,
-            'status' => 'Unpaid',
+            'Status' => 'Unpaid',
             'value_status' => 2,
             'note' => $request->note,
         ]);
@@ -167,10 +167,10 @@ class InvoicesController extends Controller
     {
         $invoices = invoices::findOrFail($id);
 
-        if ($request->status === 'paid') {
+        if ($request->Status === 'paid') {
             $invoices->update([
                 'value_status' => 1,
-                'status' => $request->status,
+                'Status' => $request->Status,
                 'payment_date' => $request->payment_date,
             ]);
 

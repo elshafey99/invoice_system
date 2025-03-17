@@ -119,8 +119,8 @@
                                 <label for="exampleTextarea">Payment Status</label>
                                 <select class="form-control" id="Status" name="Status" required>
                                     <option selected="true" disabled="disabled">-- select payment status --</option>
-                                    <option value="paid">Paid</option>
-                                    <option value="partly_paid">Partly Paid</option>
+                                    <option value="paid">paid</option>
+                                    <option value="partly_paid">partly_paid</option>
                                 </select>
                             </div>
                             <div class="col">

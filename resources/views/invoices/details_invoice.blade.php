@@ -89,7 +89,7 @@
                                                             <td>{{ $invoices->amount_collection }}</td>
                                                             <th scope="row">Commission Amount</th>
                                                             <td>{{ $invoices->amount_commission }}</td>
-                                                            <th scope="row">الخصم</th>
+                                                            <th scope="row">Discount</th>
                                                             <td>{{ $invoices->discount }}</td>
                                                         </tr>
                                                         <tr>
@@ -102,16 +102,16 @@
                                                             <th scope="row">Current status</th>
                                                             @if ($invoices->value_status == 1)
                                                                 <td><span
-                                                                        class="badge badge-pill badge-success">{{ $invoices->status }}</span>
+                                                                        class="badge badge-pill badge-success">{{ $invoices->Status }}</span>
                                                                 </td>
                                                             @elseif($invoices->value_status == 2)
                                                                 <td>
                                                                     <span
-                                                                        class="badge badge-pill badge-danger">{{ $invoices->status }}</span>
+                                                                        class="badge badge-pill badge-danger">{{ $invoices->Status }}</span>
                                                                 </td>
                                                             @else
                                                                 <td><span
-                                                                        class="badge badge-pill badge-warning">{{ $invoices->status }}</span>
+                                                                        class="badge badge-pill badge-warning">{{ $invoices->Status }}</span>
                                                                 </td>
                                                             @endif
                                                         </tr>
@@ -175,28 +175,28 @@
                                         <div class="tab-pane" id="tab6">
                                             <!--المرفقات-->
                                             <div class="card card-statistics">
-                                                {{-- @can('Add Attachment') --}}
-                                                <div class="card-body">
-                                                    <p class="text-danger">* صيغة المرفق pdf, jpeg ,.jpg , png </p>
-                                                    <h5 class="card-title">Add Attachment</h5>
-                                                    <form method="post" action="{{ url('/invoice-attachment') }}"
-                                                        enctype="multipart/form-data">
-                                                        {{ csrf_field() }}
-                                                        <div class="custom-file">
-                                                            <input type="file" class="custom-file-input" id="customFile"
-                                                                name="file_name" required>
-                                                            <input type="hidden" id="customFile" name="invoice_number"
-                                                                value="{{ $invoices->invoice_number }}">
-                                                            <input type="hidden" id="invoice_id" name="invoice_id"
-                                                                value="{{ $invoices->id }}">
-                                                            <label class="custom-file-label" for="customFile">select
-                                                                attachment</label>
-                                                        </div><br><br>
-                                                        <button type="submit" class="btn btn-primary btn-sm "
-                                                            name="uploadedFile">submit</button>
-                                                    </form>
-                                                </div>
-                                                {{-- @endcan --}}
+                                                @can('Add Attachment')
+                                                    <div class="card-body">
+                                                        <p class="text-danger">* Attachment format pdf, jpeg ,.jpg , png </p>
+                                                        <h5 class="card-title">Add Attachment</h5>
+                                                        <form method="post" action="{{ url('/invoice-attachment') }}"
+                                                            enctype="multipart/form-data">
+                                                            {{ csrf_field() }}
+                                                            <div class="custom-file">
+                                                                <input type="file" class="custom-file-input" id="customFile"
+                                                                    name="file_name" required>
+                                                                <input type="hidden" id="customFile" name="invoice_number"
+                                                                    value="{{ $invoices->invoice_number }}">
+                                                                <input type="hidden" id="invoice_id" name="invoice_id"
+                                                                    value="{{ $invoices->id }}">
+                                                                <label class="custom-file-label" for="customFile">select
+                                                                    attachment</label>
+                                                            </div><br><br>
+                                                            <button type="submit" class="btn btn-primary btn-sm "
+                                                                name="uploadedFile">submit</button>
+                                                        </form>
+                                                    </div>
+                                                @endcan
                                                 <br>
                                                 <div class="table-responsive mt-15">
                                                     <table class="table center-aligned-table mb-0 table table-hover"
@@ -230,14 +230,14 @@
                                                                             role="button"><i class="fas fa-download"></i>&nbsp;
                                                                             download</a>
 
-                                                                        {{-- @can('حذف المرفق') --}}
-                                                                        <button class="btn btn-outline-danger btn-sm"
-                                                                            data-toggle="modal"
-                                                                            data-file_name="{{ $attachment->file_name }}"
-                                                                            data-invoice_number="{{ $attachment->invoice_number }}"
-                                                                            data-id_file="{{ $attachment->id }}"
-                                                                            data-target="#delete_file">delete</button>
-                                                                        {{-- @endcan --}}
+                                                                        @can('Delete Attachment')
+                                                                            <button class="btn btn-outline-danger btn-sm"
+                                                                                data-toggle="modal"
+                                                                                data-file_name="{{ $attachment->file_name }}"
+                                                                                data-invoice_number="{{ $attachment->invoice_number }}"
+                                                                                data-id_file="{{ $attachment->id }}"
+                                                                                data-target="#delete_file">delete</button>
+                                                                        @endcan
                                                                     </td>
                                                                 </tr>
                                                             @endforeach

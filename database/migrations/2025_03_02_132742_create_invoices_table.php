@@ -25,7 +25,7 @@ return new class extends Migration
             $table->decimal('value_vat', 8, 2);
             $table->string('rate_vat', 999);
             $table->decimal('total', 8, 2);
-            $table->string('status', 50);
+            $table->string('Status', 50);
             $table->integer('value_status');
             $table->text('note')->nullable();
             $table->date('payment_date')->nullable();
