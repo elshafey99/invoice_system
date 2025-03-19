@@ -1,66 +1,57 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Invoices Sysytem using Laravel 10
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+A new Web project.
 
-## About Laravel
+## Getting Started
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+`The Invoices Project is a comprehensive system designed to streamline the invoice management process. It provides an intuitive interface for administrators and users to add, view, and manage invoices, along with their payment details. The system also includes features such as printing invoices and user management with varying permissions.
+The system revolves around three main sections: the Department Section, the Product Section, and the Invoices Section. These sections can be managed by both the admin and users with appropriate permissions.
+In the Department Section, the admin and authorized users can create, edit, and delete departments. This allows for better organization and categorization of invoices based on the respective departments.
+Similarly, in the Product Section, the admin and authorized users can add, update, and delete products. This section enables the management of a comprehensive product catalog to select from when creating invoices.
+Moving to the Invoices Section, the admin and authorized users have the ability to add new invoices to the system. They can input all the necessary details, such as invoice number, date, customer information, product selection, and payment details. The system stores this information securely and allows for easy retrieval and modification if needed.`
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Features:
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+-   Login screen.
+-   Statistics page.
+-   Invoices department.
+-   Section department.
+-   Product department.
+-   List of users.
+-   Users permitions management
+-   Dashboard for admin to manage all users and reports
+-   Email notification
+-   Print invoices
+-   Recieve notifications in dashboard for admins
 
-## Learning Laravel
+## Used Technologies
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+-   Valex Dashboard
+-   HTML
+-   CSS
+-   JavaScript
+-   Jquery
+-   Bootstrap
+-   AJAX
+-   PHP
+-   Laravel Framework
+-   MySQL Database
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+#### Screenshots
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
-
-## Laravel Sponsors
-
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
-
-### Premium Partners
-
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+<img src="screenshots/1-login.png.png"/>
+<img src="screenshots/2-invoices statistics.png.png"/>
+<img src="screenshots/3-all invoices.png.png"/>
+<img src="screenshots/4-change payment status .png.png"/>
+<img src="screenshots/5-paid invoice.png.png"/>
+<img src="screenshots/6-reports.png.png"/>
+<img src="screenshots/7-search by invoice type.png.png"/>
+<img src="screenshots/8-search by invoice number.png.png"/>
+<img src="screenshots/9-customer reports.png.png"/>
+<img src="screenshots/10-users list.png.png"/>
+<img src="screenshots/11-user permissions.png.png"/>
+<img src="screenshots/12-products.png.png"/>
+<img src="screenshots/13-sections.png.png"/>
+<img src="screenshots/14-invoice details 1.png.png"/>
+<img src="screenshots/15-invoice details 2 .png.png"/>
+<img src="screenshots/16-invoice details 3.png.png"/>

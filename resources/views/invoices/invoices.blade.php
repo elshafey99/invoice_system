@@ -1,5 +1,5 @@
 @extends('layouts.master')
-@section('title', 'Invoice Bills')
+@section('title', 'Invoice List')
 @section('css')
     <!-- Internal Data table css -->
     <link href="{{ URL::asset('assets/plugins/datatable/css/dataTables.bootstrap4.min.css') }}" rel="stylesheet" />
@@ -17,7 +17,7 @@
         <div class="my-auto">
             <div class="d-flex">
                 <h4 class="content-title mb-0 my-auto">Invoices</h4>
-                <span class="text-muted mt-1 tx-13 mr-2 mb-0">/ Invoice Bills</span>
+                <span class="text-muted mt-1 tx-13 mr-2 mb-0">/ Invoice List</span>
             </div>
         </div>
     </div>

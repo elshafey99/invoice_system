@@ -23,7 +23,7 @@ class AddSectionRequest extends FormRequest
     {
         return [
             'section_name' => ['required', 'unique:sections', 'max:255'],
-            'description' => ['required']
+            'description' => ['nullable']
         ];
     }
 }

@@ -1,7 +1,7 @@
 <!-- main-sidebar -->
 <div class="app-sidebar__overlay" data-toggle="sidebar"></div>
 <aside class="app-sidebar sidebar-scroll">
-    <div class="main-sidebar-header active">
+    {{-- <div class="main-sidebar-header active">
         <a class="desktop-logo logo-light active" href="{{ url('/' . ($page = 'index')) }}"><img
                 src="{{ URL::asset('assets/img/brand/logo.png') }}" class="main-logo" alt="logo"></a>
         <a class="desktop-logo logo-dark active" href="{{ url('/' . ($page = 'index')) }}"><img
@@ -11,7 +11,7 @@
         <a class="logo-icon mobile-logo icon-dark active" href="{{ url('/' . ($page = 'index')) }}"><img
                 src="{{ URL::asset('assets/img/brand/favicon-white.png') }}" class="logo-icon dark-theme"
                 alt="logo"></a>
-    </div>
+    </div> --}}
     <div class="main-sidemenu">
         <div class="app-sidebar__user clearfix">
             <div class="dropdown user-pro-body">
@@ -118,8 +118,8 @@
             @can('Settings')
                 <li class="side-item side-item-category">Settings</li>
                 <li class="slide">
-                    <a class="side-menu__item" data-toggle="slide" href="{{ url('/' . ($page = '#')) }}"><svg
-                            xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" class="side-menu__icon"
+                    <a class="side-menu__item" data-toggle="slide" href="{{ url('/' . ($page = '#')) }}">
+                        <svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" class="side-menu__icon"
                             viewBox="0 0 24 24">
                             <g>
                                 <rect fill="none" />
