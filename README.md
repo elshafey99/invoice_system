@@ -55,3 +55,4 @@ Moving to the Invoices Section, the admin and authorized users have the ability 
 <img src="screenshots/14-invoice details 1.png"/>
 <img src="screenshots/15-invoice details 2 .png"/>
 <img src="screenshots/16-invoice details 3.png"/>
+<img src="screenshots/17-notification.png"/>
