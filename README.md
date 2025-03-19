@@ -39,19 +39,19 @@ Moving to the Invoices Section, the admin and authorized users have the ability 
 
 #### Screenshots
 
-<img src="screenshots/1-login.png.png"/>
-<img src="screenshots/2-invoices statistics.png.png"/>
-<img src="screenshots/3-all invoices.png.png"/>
-<img src="screenshots/4-change payment status .png.png"/>
-<img src="screenshots/5-paid invoice.png.png"/>
-<img src="screenshots/6-reports.png.png"/>
-<img src="screenshots/7-search by invoice type.png.png"/>
-<img src="screenshots/8-search by invoice number.png.png"/>
-<img src="screenshots/9-customer reports.png.png"/>
-<img src="screenshots/10-users list.png.png"/>
-<img src="screenshots/11-user permissions.png.png"/>
-<img src="screenshots/12-products.png.png"/>
-<img src="screenshots/13-sections.png.png"/>
-<img src="screenshots/14-invoice details 1.png.png"/>
-<img src="screenshots/15-invoice details 2 .png.png"/>
-<img src="screenshots/16-invoice details 3.png.png"/>
+<img src="screenshots/1-login.png"/>
+<img src="screenshots/2-invoices statistics.png"/>
+<img src="screenshots/3-all invoices.png"/>
+<img src="screenshots/4-change payment status.png"/>
+<img src="screenshots/5-paid invoice.png"/>
+<img src="screenshots/6-reports.png"/>
+<img src="screenshots/7-search by invoice type.png"/>
+<img src="screenshots/8-search by invoice number.png"/>
+<img src="screenshots/9-customer reports.png"/>
+<img src="screenshots/10-users list.png"/>
+<img src="screenshots/11-user permissions.png"/>
+<img src="screenshots/12-products.png"/>
+<img src="screenshots/13-sections.png"/>
+<img src="screenshots/14-invoice details 1.png"/>
+<img src="screenshots/15-invoice details 2 .png"/>
+<img src="screenshots/16-invoice details 3.png"/>
