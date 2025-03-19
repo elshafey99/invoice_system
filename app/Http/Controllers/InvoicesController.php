@@ -2,16 +2,22 @@
 
 namespace App\Http\Controllers;
 
-use App\Exports\InvoicesExport;
+use App\Models\User;
 use App\Models\invoices;
 use App\Models\sections;
 use Illuminate\Http\Request;
+use App\Exports\InvoicesExport;
 use App\Models\invoicesDetails;
+use App\Notifications\AddInvoice;
 use App\Models\invoicesAttachment;
+use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage;
 use Maatwebsite\Excel\Facades\Excel;
+use App\Notifications\AddInvoicesNew;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Notification;
+use Illuminate\Support\Facades\Notification as FacadesNotification;
 
 class InvoicesController extends Controller
 {
@@ -84,6 +90,14 @@ class InvoicesController extends Controller
             $imageName = $request->pic->getClientOriginalName();
             $request->pic->move(public_path('Attachments/' . $invoice_number), $imageName);
         }
+        $user = Auth::user();
+        // Mail::to($user->email)->send(new AddInvoice($invoice_id));
+
+
+        //$users = User::where('roles_name', '["owner"]')->where('id', '!=', Auth::user()->id)->get();
+        $user = User::get(); // send to all users
+        $invoices = invoices::latest()->first();
+        Notification::send($user, new AddInvoicesNew($invoices));
 
         session()->flash('Add', 'The invoice has been added successfully.');
         return back();
@@ -233,5 +247,14 @@ class InvoicesController extends Controller
     public function export()
     {
         return Excel::download(new InvoicesExport, 'invoices.xlsx');
+    }
+
+    public function markAllAsRead()
+    {
+        $unReadNoty = Auth::user()->unreadNotifications;
+        if ($unReadNoty) {
+            $unReadNoty->markAsRead();
+            return back();
+        }
     }
 }

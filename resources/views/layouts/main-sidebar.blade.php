@@ -22,7 +22,7 @@
                 </div>
                 <div class="user-info">
                     <h4 class="font-weight-semibold mt-3 mb-0">{{ Auth::User()->name }}</h4>
-                    <span class="mb-0 text-muted">{{ Auth::User()->mail }}</span>
+                    <span class="mb-0 text-muted">{{ Auth::User()->email }}</span>
                 </div>
             </div>
         </div>
